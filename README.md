@@ -3,10 +3,7 @@ jupyter notebooks i publish as I explore ai tools
 
 
 
-[video 1](https://youtu.be/reurRzxpkBc)
-
-[video 2](https://youtu.be/hCgO_cm2VN0)
-
+[hugging face walk-through 1](https://youtu.be/tuWF-uCjbzM)
 
 
 
