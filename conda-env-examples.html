@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+/* copied from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_collapsible */
+
+.collapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 14px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+.collapsible:after {
+  content: '\002B';
+  color: white;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+
+}
+
+.active:after {
+  content: "\c";
+}
+
+.content {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: #f1f1f1;
+}
+
+#container {
+  background-color: #000000;
+  width: 100%;
+  height: 100%;
+  max-width: 1400px;
+  max-height: 9400px;
+  padding: .1em;
+}
+
+#content {
+  color: #ffffff;
+  font-size: 12px;
+  font-family: monospace;
+  font-weight: normal;
+}
+</style>
+</head>
+
+
+
+<body>
+<h1>some quick examples with conda</h1>
+<p>
+Jeremy Bloom put this together Feb 22, 2024.  The collapsible html and java script was copied wholly from <a href="https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_collapsible">W3Schools</a>. </p>
+
+
+
+
+<h2>1. make sure conda is present and in path
+<button class="collapsible">% conda</button>
+<div class="content">
+<div id="container">
+<div id="content">
+<pre>
+<b>(base) % conda</b>
+usage: conda [-h] [-v] [--no-plugins] [-V] COMMAND ...
+
+conda is a tool for managing and deploying applications, environments and packages.
+
+options:
+  -h, --help          Show this help message and exit.
+  -v, --verbose       Can be used multiple times. Once for detailed output, twice for INFO logging, thrice for DEBUG logging, four
+                      times for TRACE logging.
+  --no-plugins        Disable all plugins that are not built into conda.
+  -V, --version       Show the conda version number and exit.
+
+commands:
+  The following built-in and plugins subcommands are available.
+
+  COMMAND
+    activate          Activate a conda environment.
+    build             Build conda packages from a conda recipe.
+    clean             Remove unused packages and caches.
+    compare           Compare packages between conda environments.
+    config            Modify configuration values in .condarc.
+    content-trust     Signing and verification tools for Conda
+    convert           Convert pure Python packages to other platforms (a.k.a., subdirs).
+    create            Create a new conda environment from a list of specified packages.
+    deactivate        Deactivate the current active conda environment.
+    debug             Debug the build or test phases of conda recipes.
+    develop           Install a Python package in 'development mode'. Similar to `pip install --editable`.
+    doctor            Display a health report for your environment.
+    index             Update package index metadata files.
+    info              Display information about current conda install.
+    init              Initialize conda for shell interaction.
+    inspect           Tools for inspecting conda packages.
+    install           Install a list of packages into a specified conda environment.
+    list              List installed packages in a conda environment.
+    metapackage       Specialty tool for generating conda metapackage.
+    notices           Retrieve latest channel notifications.
+    pack              See `conda pack --help`.
+    package           Create low-level conda packages. (EXPERIMENTAL)
+    remove (uninstall)
+                      Remove a list of packages from a specified conda environment.
+    rename            Rename an existing environment.
+    render            Expand a conda recipe into a platform-specific recipe.
+    repo              See `conda repo --help`.
+    repoquery         Advanced search for repodata.
+    run               Run an executable in a conda environment.
+    search            Search for packages and display associated information using the MatchSpec format.
+    server            See `conda server --help`.
+    skeleton          Generate boilerplate conda recipes.
+    token             See `conda token --help`.
+    update (upgrade)  Update conda packages to the latest compatible version.
+    verify            See `conda verify --help`.
+<b>(base) %</b>
+</pre></div></div></div>
+
+
+<h2>2. get conda up to date
+<button class="collapsible">% conda update conda</button>
+<div class="content">
+<div id="container">
+<div id="content">
+<pre>
+<b>(base) % conda update conda</b>
+Channels:
+ - defaults
+Platform: osx-arm64
+Collecting package metadata (repodata.json): done
+Solving environment: done
+
+# All requested packages already installed.
+<b>(base) %</b>
+</pre></div></div></div>
+
+
+<h2>3. show conda environments
+<button class="collapsible">% conda env list</button>
+<div class="content">
+<div id="container">
+<div id="content">
+<pre>
+<b>(base) % conda env list</b>
+# conda environments:
+#
+base                  *  /Users/jeremybloom/anaconda3
+dev1                     /Users/jeremybloom/anaconda3/envs/dev1
+
+<b>(base) %</b>
+</pre></div></div></div>
+
+
+<h2>4. delete conda env (optional)
+<button class="collapsible">% conda remove --name ENVNAME --all</button>
+<div class="content">
+<div id="container">
+<div id="content">
+<pre>
+<b>(base) % conda remove --name dev1 --all</b>
+
+Remove all packages in environment /Users/jeremybloom/anaconda3/envs/dev1:
+
+
+## Package Plan ##
+
+  environment location: /Users/jeremybloom/anaconda3/envs/dev1
+
+
+The following packages will be REMOVED:
+
+  anyio-4.2.0-py310hca03da5_0
+  appnope-0.1.2-py310hca03da5_1001
+  argon2-cffi-21.3.0-pyhd3eb1b0_0
+  argon2-cffi-bindings-21.2.0-py310h1a28f6b_0
+  asttokens-2.0.5-pyhd3eb1b0_0
+  async-lru-2.0.4-py310hca03da5_0
+  attrs-23.1.0-py310hca03da5_0
+  babel-2.11.0-py310hca03da5_0
+  beautifulsoup4-4.12.2-py310hca03da5_0
+  blas-1.0-openblas
+  bleach-4.1.0-pyhd3eb1b0_0
+  bottleneck-1.3.7-py310hbda83bc_0
+  brotli-python-1.0.9-py310hc377ac9_7
+  bzip2-1.0.8-h620ffc9_4
+  ca-certificates-2023.12.12-hca03da5_0
+  certifi-2024.2.2-py310hca03da5_0
+  cffi-1.16.0-py310h80987f9_0
+  charset-normalizer-2.0.4-pyhd3eb1b0_0
+  comm-0.1.2-py310hca03da5_0
+  cyrus-sasl-2.1.28-h9131b1a_1
+  debugpy-1.6.7-py310h313beb8_0
+  decorator-5.1.1-pyhd3eb1b0_0
+  defusedxml-0.7.1-pyhd3eb1b0_0
+  distro-1.8.0-py310hca03da5_0
+  exceptiongroup-1.2.0-py310hca03da5_0
+  executing-0.8.3-pyhd3eb1b0_0
+  gettext-0.21.0-h13f89a0_1
+  glib-2.78.4-h313beb8_0
+  glib-tools-2.78.4-h313beb8_0
+  gst-plugins-base-1.14.1-h313beb8_1
+  gstreamer-1.14.1-h80987f9_1
+  h11-0.14.0-py310hca03da5_0
+  httpcore-1.0.2-py310hca03da5_0
+  httpx-0.26.0-py310hca03da5_0
+  icu-73.1-h313beb8_0
+  idna-3.4-py310hca03da5_0
+  ipykernel-6.28.0-py310hca03da5_0
+  ipython-8.20.0-py310hca03da5_0
+  ipywidgets-8.0.4-py310hca03da5_0
+  jedi-0.18.1-py310hca03da5_1
+  jinja2-3.1.3-py310hca03da5_0
+  jpeg-9e-h80987f9_1
+  json5-0.9.6-pyhd3eb1b0_0
+  jsonschema-4.19.2-py310hca03da5_0
+  jsonschema-specifications-2023.7.1-py310hca03da5_0
+  jupyter-1.0.0-py310hca03da5_9
+  jupyter-lsp-2.2.0-py310hca03da5_0
+  jupyter_client-8.6.0-py310hca03da5_0
+  jupyter_console-6.6.3-py310hca03da5_0
+  jupyter_core-5.5.0-py310hca03da5_0
+  jupyter_events-0.8.0-py310hca03da5_0
+  jupyter_server-2.10.0-py310hca03da5_0
+  jupyter_server_terminals-0.4.4-py310hca03da5_1
+  jupyterlab-4.0.11-py310hca03da5_0
+  jupyterlab_pygments-0.1.2-py_0
+  jupyterlab_server-2.25.1-py310hca03da5_0
+  jupyterlab_widgets-3.0.9-py310hca03da5_0
+  krb5-1.20.1-hf3e1bf2_1
+  libclang-14.0.6-default_h1b80db6_1
+  libclang13-14.0.6-default_h24352ff_1
+  libcxx-14.0.6-h848a8c0_0
+  libedit-3.1.20230828-h80987f9_0
+  libffi-3.4.4-hca03da5_0
+  libgfortran-5.0.0-11_3_0_hca03da5_28
+  libgfortran5-11.3.0-h009349e_28
+  libglib-2.78.4-h0a96307_0
+  libiconv-1.16-h1a28f6b_2
+  libllvm14-14.0.6-h7ec7a93_3
+  libopenblas-0.3.21-h269037a_0
+  libpng-1.6.39-h80987f9_0
+  libpq-12.17-h02f6b3c_0
+  libsodium-1.0.18-h1a28f6b_0
+  libxml2-2.10.4-h0dcf63f_1
+  llvm-openmp-14.0.6-hc6e5704_0
+  lz4-c-1.9.4-h313beb8_0
+  markupsafe-2.1.3-py310h80987f9_0
+  matplotlib-inline-0.1.6-py310hca03da5_0
+  mistune-2.0.4-py310hca03da5_0
+  mysql-5.7.24-ha71a6ea_2
+  nbclient-0.8.0-py310hca03da5_0
+  nbconvert-7.10.0-py310hca03da5_0
+  nbformat-5.9.2-py310hca03da5_0
+  ncurses-6.4-h313beb8_0
+  nest-asyncio-1.6.0-py310hca03da5_0
+  notebook-7.0.8-py310hca03da5_0
+  notebook-shim-0.2.3-py310hca03da5_0
+  numexpr-2.8.7-py310hecc3335_0
+  numpy-1.26.3-py310h3b2db8e_0
+  numpy-base-1.26.3-py310ha9811e2_0
+  openai-1.9.0-py310hca03da5_0
+  openssl-3.0.13-h1a28f6b_0
+  overrides-7.4.0-py310hca03da5_0
+  packaging-23.1-py310hca03da5_0
+  pandas-2.1.4-py310h46d7db6_0
+  pandas-stubs-2.1.4.231227-py310hca03da5_0
+  pandocfilters-1.5.0-pyhd3eb1b0_0
+  parso-0.8.3-pyhd3eb1b0_0
+  pcre2-10.42-hb066dcc_0
+  pexpect-4.8.0-pyhd3eb1b0_3
+  pip-23.3.1-py310hca03da5_0
+  platformdirs-3.10.0-py310hca03da5_0
+  ply-3.11-py310hca03da5_0
+  prometheus_client-0.14.1-py310hca03da5_0
+  prompt-toolkit-3.0.43-py310hca03da5_0
+  prompt_toolkit-3.0.43-hd3eb1b0_0
+  psutil-5.9.0-py310h1a28f6b_0
+  ptyprocess-0.7.0-pyhd3eb1b0_2
+  pure_eval-0.2.2-pyhd3eb1b0_0
+  pycparser-2.21-pyhd3eb1b0_0
+  pydantic-1.10.12-py310h80987f9_1
+  pygments-2.15.1-py310hca03da5_1
+  pyqt-5.15.10-py310h313beb8_0
+  pyqt5-sip-12.13.0-py310h80987f9_0
+  pysocks-1.7.1-py310hca03da5_0
+  python-3.10.13-hb885b13_0
+  python-dateutil-2.8.2-pyhd3eb1b0_0
+  python-fastjsonschema-2.16.2-py310hca03da5_0
+  python-json-logger-2.0.7-py310hca03da5_0
+  python-tzdata-2023.3-pyhd3eb1b0_0
+  pytz-2023.3.post1-py310hca03da5_0
+  pyyaml-6.0.1-py310h80987f9_0
+  pyzmq-25.1.2-py310h313beb8_0
+  qt-main-5.15.2-h0917680_10
+  qtconsole-5.5.0-py310hca03da5_0
+  qtpy-2.4.1-py310hca03da5_0
+  readline-8.2-h1a28f6b_0
+  referencing-0.30.2-py310hca03da5_0
+  requests-2.31.0-py310hca03da5_1
+  rfc3339-validator-0.1.4-py310hca03da5_0
+  rfc3986-validator-0.1.1-py310hca03da5_0
+  rpds-py-0.10.6-py310hf0e4da2_0
+  send2trash-1.8.2-py310hca03da5_0
+  setuptools-68.2.2-py310hca03da5_0
+  sip-6.7.12-py310h313beb8_0
+  six-1.16.0-pyhd3eb1b0_1
+  sniffio-1.3.0-py310hca03da5_0
+  soupsieve-2.5-py310hca03da5_0
+  sqlite-3.41.2-h80987f9_0
+  stack_data-0.2.0-pyhd3eb1b0_0
+  terminado-0.17.1-py310hca03da5_0
+  tinycss2-1.2.1-py310hca03da5_0
+  tk-8.6.12-hb8d0fd4_0
+  tomli-2.0.1-py310hca03da5_0
+  tornado-6.3.3-py310h80987f9_0
+  tqdm-4.65.0-py310h33ce5c2_0
+  traitlets-5.7.1-py310hca03da5_0
+  types-pytz-2022.4.0.0-py310hca03da5_1
+  typing-extensions-4.9.0-py310hca03da5_1
+  typing_extensions-4.9.0-py310hca03da5_1
+  tzdata-2023d-h04d1e81_0
+  urllib3-2.1.0-py310hca03da5_1
+  wcwidth-0.2.5-pyhd3eb1b0_0
+  webencodings-0.5.1-py310hca03da5_1
+  websocket-client-0.58.0-py310hca03da5_4
+  wheel-0.41.2-py310hca03da5_0
+  widgetsnbextension-4.0.5-py310hca03da5_0
+  xz-5.4.5-h80987f9_0
+  yaml-0.2.5-h1a28f6b_0
+  zeromq-4.3.5-h313beb8_0
+  zlib-1.2.13-h5a0b063_0
+  zstd-1.5.5-hd90d995_0
+
+
+Proceed ([y]/n)? 
+
+Preparing transaction: done
+Verifying transaction: done
+Executing transaction: done
+Everything found within the environment (/Users/jeremybloom/anaconda3/envs/dev1), including any conda environment configurations and any non-conda files, will be deleted. Do you wish to continue?
+ (y/[n])? y
+ 
+<b>(base) %</b>
+</pre></div></div></div>
+
+
+
+<h2>5. show conda env list - note dev1 is gone
+<button class="collapsible">% conda create --name ENVNAME python=3.10 </button>
+<div class="content"><div id="container"><div id="content">
+<pre>
+<b>(base) % conda env list</b>
+# conda environments:
+#
+base                  *  /Users/jeremybloom/anaconda3
+
+<b>(base) %</b>
+</pre></div></div></div>
+
+
+
+<h2>6. add conda environment and, optionally, specify packages and opt version numbers
+<button class="collapsible">% conda create --name ENVNAME python=3.10 </button>
+<div class="content"><div id="container"><div id="content">
+<pre>
+<b>(base) % conda create --name dev1 python=3.10</b>
+Channels:
+ - defaults
+Platform: osx-arm64
+Collecting package metadata (repodata.json): done
+Solving environment: done
+
+## Package Plan ##
+
+  environment location: /Users/jeremybloom/anaconda3/envs/dev1
+
+  added / updated specs:
+    - python=3.10
+
+
+The following NEW packages will be INSTALLED:
+
+  bzip2              pkgs/main/osx-arm64::bzip2-1.0.8-h620ffc9_4 
+  ca-certificates    pkgs/main/osx-arm64::ca-certificates-2023.12.12-hca03da5_0 
+  libffi             pkgs/main/osx-arm64::libffi-3.4.4-hca03da5_0 
+  ncurses            pkgs/main/osx-arm64::ncurses-6.4-h313beb8_0 
+  openssl            pkgs/main/osx-arm64::openssl-3.0.13-h1a28f6b_0 
+  pip                pkgs/main/osx-arm64::pip-23.3.1-py310hca03da5_0 
+  python             pkgs/main/osx-arm64::python-3.10.13-hb885b13_0 
+  readline           pkgs/main/osx-arm64::readline-8.2-h1a28f6b_0 
+  setuptools         pkgs/main/osx-arm64::setuptools-68.2.2-py310hca03da5_0 
+  sqlite             pkgs/main/osx-arm64::sqlite-3.41.2-h80987f9_0 
+  tk                 pkgs/main/osx-arm64::tk-8.6.12-hb8d0fd4_0 
+  tzdata             pkgs/main/noarch::tzdata-2023d-h04d1e81_0 
+  wheel              pkgs/main/osx-arm64::wheel-0.41.2-py310hca03da5_0 
+  xz                 pkgs/main/osx-arm64::xz-5.4.5-h80987f9_0 
+  zlib               pkgs/main/osx-arm64::zlib-1.2.13-h5a0b063_0 
+
+
+Proceed ([y]/n)? 
+
+
+Downloading and Extracting Packages:
+
+Preparing transaction: done
+Verifying transaction: done
+Executing transaction: done
+#
+# To activate this environment, use
+#
+#     $ conda activate dev1
+#
+# To deactivate an active environment, use
+#
+#     $ conda deactivate
+
+<b>(base) %</b>
+</pre></div></div></div>
+
+
+
+<h2>7. show conda envs again (optional)
+<button class="collapsible">% conda env list</button>
+<div class="content"><div id="container"><div id="content">
+<pre>
+<b>(base) % conda env list</b>
+con# conda environments:
+#
+base                  *  /Users/jeremybloom/anaconda3
+dev1                     /Users/jeremybloom/anaconda3/envs/dev1
+
+
+
+<b>(base) %</b>
+</pre></div></div></div>
+
+<h2>8. Activate the new environment - note change in prompt
+<button class="collapsible">% conda activate dev1</button>
+<div class="content">
+<div id="container">
+<div id="content">
+<pre>
+<b>(base)  % conda activate dev1</b>
+<b>(dev1)  % conda list</b>
+</pre></div></div></div>
+
+
+<h2>9. see what packages are in this conda environment
+<button class="collapsible">% conda list</button>
+<div class="content"><div id="container"><div id="content">
+<pre>
+<b>(dev1) % conda list</b>
+# packages in environment at /Users/jeremybloom/anaconda3/envs/dev1:
+#
+# Name                    Version                   Build  Channel
+bzip2                     1.0.8                h620ffc9_4  
+ca-certificates           2023.12.12           hca03da5_0  
+libffi                    3.4.4                hca03da5_0  
+ncurses                   6.4                  h313beb8_0  
+openssl                   3.0.13               h1a28f6b_0  
+pip                       23.3.1          py310hca03da5_0  
+python                    3.10.13              hb885b13_0  
+readline                  8.2                  h1a28f6b_0  
+setuptools                68.2.2          py310hca03da5_0  
+sqlite                    3.41.2               h80987f9_0  
+tk                        8.6.12               hb8d0fd4_0  
+tzdata                    2023d                h04d1e81_0  
+wheel                     0.41.2          py310hca03da5_0  
+xz                        5.4.5                h80987f9_0  
+zlib                      1.2.13               h5a0b063_0 
+</b>(dev1) %</b>
+</pre></div></div></div>
+
+
+<h2>10. try and fail to run jupyter
+<button class="collapsible">% jupyter</button>
+<div class="content"><div id="container"><div id="content">
+<pre>
+<b>(dev1) % jupyter</b>
+zsh: command not found: jupyter
+
+</b>(dev1) %</b>
+</pre></div></div></div>
+
+
+<h2>11. search for jupyter package
+<button class="collapsible">% conda search jupyter</button>
+<div class="content"><div id="container"><div id="content">
+<pre>
+<b>(dev1) % conda search jupyter</b>
+Loading channels: done
+# Name                       Version           Build  Channel             
+jupyter                        1.0.0 py310hca03da5_7  pkgs/main           
+jupyter                        1.0.0 py310hca03da5_8  pkgs/main           
+jupyter                        1.0.0 py310hca03da5_9  pkgs/main           
+jupyter                        1.0.0 py311hca03da5_8  pkgs/main           
+jupyter                        1.0.0 py311hca03da5_9  pkgs/main           
+jupyter                        1.0.0  py38hca03da5_7  pkgs/main           
+jupyter                        1.0.0  py38hca03da5_8  pkgs/main           
+jupyter                        1.0.0  py38hca03da5_9  pkgs/main           
+jupyter                        1.0.0  py39hca03da5_7  pkgs/main           
+jupyter                        1.0.0  py39hca03da5_8  pkgs/main           
+jupyter                        1.0.0  py39hca03da5_9  pkgs/main           
+<b>(dev1) %</b>
+</pre></div></div></div>
+
+
+<h2>12. install jupyter package - note it will install jupyter and packages it depends on
+<button class="collapsible">% conda install jupyter</button>
+<div class="content"><div id="container"><div id="content">
+<pre>
+<b>(dev1) % conda install jupyter</b>
+Channels:
+ - defaults
+Platform: osx-arm64
+Collecting package metadata (repodata.json): done
+Solving environment: done
+
+## Package Plan ##
+
+  environment location: /Users/jeremybloom/anaconda3/envs/dev1
+
+  added / updated specs:
+    - jupyter
+
+
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    anyio-4.2.0                |  py310hca03da5_0         191 KB
+    appnope-0.1.2              |py310hca03da5_1001          10 KB
+    argon2-cffi-bindings-21.2.0|  py310h1a28f6b_0          32 KB
+    async-lru-2.0.4            |  py310hca03da5_0          19 KB
+    attrs-23.1.0               |  py310hca03da5_0         142 KB
+    babel-2.11.0               |  py310hca03da5_0         6.8 MB
+    beautifulsoup4-4.12.2      |  py310hca03da5_0         219 KB
+    brotli-python-1.0.9        |  py310hc377ac9_7         324 KB
+    certifi-2024.2.2           |  py310hca03da5_0         161 KB
+    cffi-1.16.0                |  py310h80987f9_0         236 KB
+    comm-0.1.2                 |  py310hca03da5_0          14 KB
+    debugpy-1.6.7              |  py310h313beb8_0         2.0 MB
+    exceptiongroup-1.2.0       |  py310hca03da5_0          31 KB
+    idna-3.4                   |  py310hca03da5_0          98 KB
+    ipykernel-6.28.0           |  py310hca03da5_0         199 KB
+    ipython-8.20.0             |  py310hca03da5_0         1.1 MB
+    ipywidgets-8.0.4           |  py310hca03da5_0         202 KB
+    jedi-0.18.1                |  py310hca03da5_1         979 KB
+    jinja2-3.1.3               |  py310hca03da5_0         280 KB
+    jsonschema-4.19.2          |  py310hca03da5_0         149 KB
+    jsonschema-specifications-2023.7.1|  py310hca03da5_0          16 KB
+    jupyter-1.0.0              |  py310hca03da5_9           9 KB
+    jupyter-lsp-2.2.0          |  py310hca03da5_0          88 KB
+    jupyter_client-8.6.0       |  py310hca03da5_0         187 KB
+    jupyter_console-6.6.3      |  py310hca03da5_0          46 KB
+    jupyter_core-5.5.0         |  py310hca03da5_0          77 KB
+    jupyter_events-0.8.0       |  py310hca03da5_0          37 KB
+    jupyter_server-2.10.0      |  py310hca03da5_0         490 KB
+    jupyter_server_terminals-0.4.4|  py310hca03da5_1          25 KB
+    jupyterlab-4.0.11          |  py310hca03da5_0         4.5 MB
+    jupyterlab_server-2.25.1   |  py310hca03da5_0          87 KB
+    jupyterlab_widgets-3.0.9   |  py310hca03da5_0         196 KB
+    markupsafe-2.1.3           |  py310h80987f9_0          23 KB
+    matplotlib-inline-0.1.6    |  py310hca03da5_0          17 KB
+    mistune-2.0.4              |  py310hca03da5_0          94 KB
+    nbclient-0.8.0             |  py310hca03da5_0          98 KB
+    nbconvert-7.10.0           |  py310hca03da5_0         477 KB
+    nbformat-5.9.2             |  py310hca03da5_0         138 KB
+    nest-asyncio-1.6.0         |  py310hca03da5_0          15 KB
+    notebook-7.0.8             |  py310hca03da5_0         3.1 MB
+    notebook-shim-0.2.3        |  py310hca03da5_0          24 KB
+    overrides-7.4.0            |  py310hca03da5_0          30 KB
+    packaging-23.1             |  py310hca03da5_0          78 KB
+    platformdirs-3.10.0        |  py310hca03da5_0          35 KB
+    ply-3.11                   |  py310hca03da5_0          81 KB
+    prometheus_client-0.14.1   |  py310hca03da5_0          91 KB
+    prompt-toolkit-3.0.43      |  py310hca03da5_0         585 KB
+    psutil-5.9.0               |  py310h1a28f6b_0         345 KB
+    pygments-2.15.1            |  py310hca03da5_1         1.8 MB
+    pyqt-5.15.10               |  py310h313beb8_0         4.3 MB
+    pyqt5-sip-12.13.0          |  py310h80987f9_0          82 KB
+    pysocks-1.7.1              |  py310hca03da5_0          28 KB
+    python-fastjsonschema-2.16.2|  py310hca03da5_0         232 KB
+    python-json-logger-2.0.7   |  py310hca03da5_0          17 KB
+    pytz-2023.3.post1          |  py310hca03da5_0         212 KB
+    pyyaml-6.0.1               |  py310h80987f9_0         167 KB
+    pyzmq-25.1.2               |  py310h313beb8_0         437 KB
+    qtconsole-5.5.0            |  py310hca03da5_0         193 KB
+    qtpy-2.4.1                 |  py310hca03da5_0         111 KB
+    referencing-0.30.2         |  py310hca03da5_0          64 KB
+    requests-2.31.0            |  py310hca03da5_1          98 KB
+    rfc3339-validator-0.1.4    |  py310hca03da5_0          10 KB
+    rfc3986-validator-0.1.1    |  py310hca03da5_0          11 KB
+    rpds-py-0.10.6             |  py310hf0e4da2_0         311 KB
+    send2trash-1.8.2           |  py310hca03da5_0          28 KB
+    sip-6.7.12                 |  py310h313beb8_0         499 KB
+    sniffio-1.3.0              |  py310hca03da5_0          17 KB
+    soupsieve-2.5              |  py310hca03da5_0          72 KB
+    terminado-0.17.1           |  py310hca03da5_0          33 KB
+    tinycss2-1.2.1             |  py310hca03da5_0          41 KB
+    tomli-2.0.1                |  py310hca03da5_0          25 KB
+    tornado-6.3.3              |  py310h80987f9_0         645 KB
+    traitlets-5.7.1            |  py310hca03da5_0         208 KB
+    typing-extensions-4.9.0    |  py310hca03da5_1          10 KB
+    typing_extensions-4.9.0    |  py310hca03da5_1          55 KB
+    urllib3-2.1.0              |  py310hca03da5_1         156 KB
+    webencodings-0.5.1         |  py310hca03da5_1          21 KB
+    websocket-client-0.58.0    |  py310hca03da5_4          67 KB
+    widgetsnbextension-4.0.5   |  py310hca03da5_0         876 KB
+    ------------------------------------------------------------
+                                           Total:        34.7 MB
+
+The following NEW packages will be INSTALLED:
+
+  anyio              pkgs/main/osx-arm64::anyio-4.2.0-py310hca03da5_0 
+  appnope            pkgs/main/osx-arm64::appnope-0.1.2-py310hca03da5_1001 
+  argon2-cffi        pkgs/main/noarch::argon2-cffi-21.3.0-pyhd3eb1b0_0 
+  argon2-cffi-bindi~ pkgs/main/osx-arm64::argon2-cffi-bindings-21.2.0-py310h1a28f6b_0 
+  asttokens          pkgs/main/noarch::asttokens-2.0.5-pyhd3eb1b0_0 
+  async-lru          pkgs/main/osx-arm64::async-lru-2.0.4-py310hca03da5_0 
+  attrs              pkgs/main/osx-arm64::attrs-23.1.0-py310hca03da5_0 
+  babel              pkgs/main/osx-arm64::babel-2.11.0-py310hca03da5_0 
+  beautifulsoup4     pkgs/main/osx-arm64::beautifulsoup4-4.12.2-py310hca03da5_0 
+  bleach             pkgs/main/noarch::bleach-4.1.0-pyhd3eb1b0_0 
+  brotli-python      pkgs/main/osx-arm64::brotli-python-1.0.9-py310hc377ac9_7 
+  certifi            pkgs/main/osx-arm64::certifi-2024.2.2-py310hca03da5_0 
+  cffi               pkgs/main/osx-arm64::cffi-1.16.0-py310h80987f9_0 
+  charset-normalizer pkgs/main/noarch::charset-normalizer-2.0.4-pyhd3eb1b0_0 
+  comm               pkgs/main/osx-arm64::comm-0.1.2-py310hca03da5_0 
+  cyrus-sasl         pkgs/main/osx-arm64::cyrus-sasl-2.1.28-h9131b1a_1 
+  debugpy            pkgs/main/osx-arm64::debugpy-1.6.7-py310h313beb8_0 
+  decorator          pkgs/main/noarch::decorator-5.1.1-pyhd3eb1b0_0 
+  defusedxml         pkgs/main/noarch::defusedxml-0.7.1-pyhd3eb1b0_0 
+  exceptiongroup     pkgs/main/osx-arm64::exceptiongroup-1.2.0-py310hca03da5_0 
+  executing          pkgs/main/noarch::executing-0.8.3-pyhd3eb1b0_0 
+  gettext            pkgs/main/osx-arm64::gettext-0.21.0-h13f89a0_1 
+  glib               pkgs/main/osx-arm64::glib-2.78.4-h313beb8_0 
+  glib-tools         pkgs/main/osx-arm64::glib-tools-2.78.4-h313beb8_0 
+  gst-plugins-base   pkgs/main/osx-arm64::gst-plugins-base-1.14.1-h313beb8_1 
+  gstreamer          pkgs/main/osx-arm64::gstreamer-1.14.1-h80987f9_1 
+  icu                pkgs/main/osx-arm64::icu-73.1-h313beb8_0 
+  idna               pkgs/main/osx-arm64::idna-3.4-py310hca03da5_0 
+  ipykernel          pkgs/main/osx-arm64::ipykernel-6.28.0-py310hca03da5_0 
+  ipython            pkgs/main/osx-arm64::ipython-8.20.0-py310hca03da5_0 
+  ipywidgets         pkgs/main/osx-arm64::ipywidgets-8.0.4-py310hca03da5_0 
+  jedi               pkgs/main/osx-arm64::jedi-0.18.1-py310hca03da5_1 
+  jinja2             pkgs/main/osx-arm64::jinja2-3.1.3-py310hca03da5_0 
+  jpeg               pkgs/main/osx-arm64::jpeg-9e-h80987f9_1 
+  json5              pkgs/main/noarch::json5-0.9.6-pyhd3eb1b0_0 
+  jsonschema         pkgs/main/osx-arm64::jsonschema-4.19.2-py310hca03da5_0 
+  jsonschema-specif~ pkgs/main/osx-arm64::jsonschema-specifications-2023.7.1-py310hca03da5_0 
+  jupyter            pkgs/main/osx-arm64::jupyter-1.0.0-py310hca03da5_9 
+  jupyter-lsp        pkgs/main/osx-arm64::jupyter-lsp-2.2.0-py310hca03da5_0 
+  jupyter_client     pkgs/main/osx-arm64::jupyter_client-8.6.0-py310hca03da5_0 
+  jupyter_console    pkgs/main/osx-arm64::jupyter_console-6.6.3-py310hca03da5_0 
+  jupyter_core       pkgs/main/osx-arm64::jupyter_core-5.5.0-py310hca03da5_0 
+  jupyter_events     pkgs/main/osx-arm64::jupyter_events-0.8.0-py310hca03da5_0 
+  jupyter_server     pkgs/main/osx-arm64::jupyter_server-2.10.0-py310hca03da5_0 
+  jupyter_server_te~ pkgs/main/osx-arm64::jupyter_server_terminals-0.4.4-py310hca03da5_1 
+  jupyterlab         pkgs/main/osx-arm64::jupyterlab-4.0.11-py310hca03da5_0 
+  jupyterlab_pygmen~ pkgs/main/noarch::jupyterlab_pygments-0.1.2-py_0 
+  jupyterlab_server  pkgs/main/osx-arm64::jupyterlab_server-2.25.1-py310hca03da5_0 
+  jupyterlab_widgets pkgs/main/osx-arm64::jupyterlab_widgets-3.0.9-py310hca03da5_0 
+  krb5               pkgs/main/osx-arm64::krb5-1.20.1-hf3e1bf2_1 
+  libclang           pkgs/main/osx-arm64::libclang-14.0.6-default_h1b80db6_1 
+  libclang13         pkgs/main/osx-arm64::libclang13-14.0.6-default_h24352ff_1 
+  libcxx             pkgs/main/osx-arm64::libcxx-14.0.6-h848a8c0_0 
+  libedit            pkgs/main/osx-arm64::libedit-3.1.20230828-h80987f9_0 
+  libglib            pkgs/main/osx-arm64::libglib-2.78.4-h0a96307_0 
+  libiconv           pkgs/main/osx-arm64::libiconv-1.16-h1a28f6b_2 
+  libllvm14          pkgs/main/osx-arm64::libllvm14-14.0.6-h7ec7a93_3 
+  libpng             pkgs/main/osx-arm64::libpng-1.6.39-h80987f9_0 
+  libpq              pkgs/main/osx-arm64::libpq-12.17-h02f6b3c_0 
+  libsodium          pkgs/main/osx-arm64::libsodium-1.0.18-h1a28f6b_0 
+  libxml2            pkgs/main/osx-arm64::libxml2-2.10.4-h0dcf63f_1 
+  llvm-openmp        pkgs/main/osx-arm64::llvm-openmp-14.0.6-hc6e5704_0 
+  lz4-c              pkgs/main/osx-arm64::lz4-c-1.9.4-h313beb8_0 
+  markupsafe         pkgs/main/osx-arm64::markupsafe-2.1.3-py310h80987f9_0 
+  matplotlib-inline  pkgs/main/osx-arm64::matplotlib-inline-0.1.6-py310hca03da5_0 
+  mistune            pkgs/main/osx-arm64::mistune-2.0.4-py310hca03da5_0 
+  mysql              pkgs/main/osx-arm64::mysql-5.7.24-ha71a6ea_2 
+  nbclient           pkgs/main/osx-arm64::nbclient-0.8.0-py310hca03da5_0 
+  nbconvert          pkgs/main/osx-arm64::nbconvert-7.10.0-py310hca03da5_0 
+  nbformat           pkgs/main/osx-arm64::nbformat-5.9.2-py310hca03da5_0 
+  nest-asyncio       pkgs/main/osx-arm64::nest-asyncio-1.6.0-py310hca03da5_0 
+  notebook           pkgs/main/osx-arm64::notebook-7.0.8-py310hca03da5_0 
+  notebook-shim      pkgs/main/osx-arm64::notebook-shim-0.2.3-py310hca03da5_0 
+  overrides          pkgs/main/osx-arm64::overrides-7.4.0-py310hca03da5_0 
+  packaging          pkgs/main/osx-arm64::packaging-23.1-py310hca03da5_0 
+  pandocfilters      pkgs/main/noarch::pandocfilters-1.5.0-pyhd3eb1b0_0 
+  parso              pkgs/main/noarch::parso-0.8.3-pyhd3eb1b0_0 
+  pcre2              pkgs/main/osx-arm64::pcre2-10.42-hb066dcc_0 
+  pexpect            pkgs/main/noarch::pexpect-4.8.0-pyhd3eb1b0_3 
+  platformdirs       pkgs/main/osx-arm64::platformdirs-3.10.0-py310hca03da5_0 
+  ply                pkgs/main/osx-arm64::ply-3.11-py310hca03da5_0 
+  prometheus_client  pkgs/main/osx-arm64::prometheus_client-0.14.1-py310hca03da5_0 
+  prompt-toolkit     pkgs/main/osx-arm64::prompt-toolkit-3.0.43-py310hca03da5_0 
+  prompt_toolkit     pkgs/main/noarch::prompt_toolkit-3.0.43-hd3eb1b0_0 
+  psutil             pkgs/main/osx-arm64::psutil-5.9.0-py310h1a28f6b_0 
+  ptyprocess         pkgs/main/noarch::ptyprocess-0.7.0-pyhd3eb1b0_2 
+  pure_eval          pkgs/main/noarch::pure_eval-0.2.2-pyhd3eb1b0_0 
+  pycparser          pkgs/main/noarch::pycparser-2.21-pyhd3eb1b0_0 
+  pygments           pkgs/main/osx-arm64::pygments-2.15.1-py310hca03da5_1 
+  pyqt               pkgs/main/osx-arm64::pyqt-5.15.10-py310h313beb8_0 
+  pyqt5-sip          pkgs/main/osx-arm64::pyqt5-sip-12.13.0-py310h80987f9_0 
+  pysocks            pkgs/main/osx-arm64::pysocks-1.7.1-py310hca03da5_0 
+  python-dateutil    pkgs/main/noarch::python-dateutil-2.8.2-pyhd3eb1b0_0 
+  python-fastjsonsc~ pkgs/main/osx-arm64::python-fastjsonschema-2.16.2-py310hca03da5_0 
+  python-json-logger pkgs/main/osx-arm64::python-json-logger-2.0.7-py310hca03da5_0 
+  pytz               pkgs/main/osx-arm64::pytz-2023.3.post1-py310hca03da5_0 
+  pyyaml             pkgs/main/osx-arm64::pyyaml-6.0.1-py310h80987f9_0 
+  pyzmq              pkgs/main/osx-arm64::pyzmq-25.1.2-py310h313beb8_0 
+  qt-main            pkgs/main/osx-arm64::qt-main-5.15.2-h0917680_10 
+  qtconsole          pkgs/main/osx-arm64::qtconsole-5.5.0-py310hca03da5_0 
+  qtpy               pkgs/main/osx-arm64::qtpy-2.4.1-py310hca03da5_0 
+  referencing        pkgs/main/osx-arm64::referencing-0.30.2-py310hca03da5_0 
+  requests           pkgs/main/osx-arm64::requests-2.31.0-py310hca03da5_1 
+  rfc3339-validator  pkgs/main/osx-arm64::rfc3339-validator-0.1.4-py310hca03da5_0 
+  rfc3986-validator  pkgs/main/osx-arm64::rfc3986-validator-0.1.1-py310hca03da5_0 
+  rpds-py            pkgs/main/osx-arm64::rpds-py-0.10.6-py310hf0e4da2_0 
+  send2trash         pkgs/main/osx-arm64::send2trash-1.8.2-py310hca03da5_0 
+  sip                pkgs/main/osx-arm64::sip-6.7.12-py310h313beb8_0 
+  six                pkgs/main/noarch::six-1.16.0-pyhd3eb1b0_1 
+  sniffio            pkgs/main/osx-arm64::sniffio-1.3.0-py310hca03da5_0 
+  soupsieve          pkgs/main/osx-arm64::soupsieve-2.5-py310hca03da5_0 
+  stack_data         pkgs/main/noarch::stack_data-0.2.0-pyhd3eb1b0_0 
+  terminado          pkgs/main/osx-arm64::terminado-0.17.1-py310hca03da5_0 
+  tinycss2           pkgs/main/osx-arm64::tinycss2-1.2.1-py310hca03da5_0 
+  tomli              pkgs/main/osx-arm64::tomli-2.0.1-py310hca03da5_0 
+  tornado            pkgs/main/osx-arm64::tornado-6.3.3-py310h80987f9_0 
+  traitlets          pkgs/main/osx-arm64::traitlets-5.7.1-py310hca03da5_0 
+  typing-extensions  pkgs/main/osx-arm64::typing-extensions-4.9.0-py310hca03da5_1 
+  typing_extensions  pkgs/main/osx-arm64::typing_extensions-4.9.0-py310hca03da5_1 
+  urllib3            pkgs/main/osx-arm64::urllib3-2.1.0-py310hca03da5_1 
+  wcwidth            pkgs/main/noarch::wcwidth-0.2.5-pyhd3eb1b0_0 
+  webencodings       pkgs/main/osx-arm64::webencodings-0.5.1-py310hca03da5_1 
+  websocket-client   pkgs/main/osx-arm64::websocket-client-0.58.0-py310hca03da5_4 
+  widgetsnbextension pkgs/main/osx-arm64::widgetsnbextension-4.0.5-py310hca03da5_0 
+  yaml               pkgs/main/osx-arm64::yaml-0.2.5-h1a28f6b_0 
+  zeromq             pkgs/main/osx-arm64::zeromq-4.3.5-h313beb8_0 
+  zstd               pkgs/main/osx-arm64::zstd-1.5.5-hd90d995_0 
+
+
+Proceed ([y]/n)? 
+
+
+Downloading and Extracting Packages:
+                                                                                                                                                                        
+Preparing transaction: done                                                                                                                                             
+Verifying transaction: done                                                                                                                                             
+Executing transaction: done                                                                                                                                    
+<b>(dev1) %</b>
+</pre></div></div></div>
+
+
+<h2>13. show what packages are now in this env (note to install jupyter it installed many more packages)
+<button class="collapsible">% conda list</button>
+<div class="content"><div id="container"><div id="content">
+<pre>
+<b>(dev1) % conda list</b>
+# packages in environment at /Users/jeremybloom/anaconda3/envs/dev1:
+#
+# Name                    Version                   Build  Channel
+anyio                     4.2.0           py310hca03da5_0  
+appnope                   0.1.2           py310hca03da5_1001  
+argon2-cffi               21.3.0             pyhd3eb1b0_0  
+argon2-cffi-bindings      21.2.0          py310h1a28f6b_0  
+asttokens                 2.0.5              pyhd3eb1b0_0  
+async-lru                 2.0.4           py310hca03da5_0  
+attrs                     23.1.0          py310hca03da5_0  
+babel                     2.11.0          py310hca03da5_0  
+beautifulsoup4            4.12.2          py310hca03da5_0  
+bleach                    4.1.0              pyhd3eb1b0_0  
+brotli-python             1.0.9           py310hc377ac9_7  
+bzip2                     1.0.8                h620ffc9_4  
+ca-certificates           2023.12.12           hca03da5_0  
+certifi                   2024.2.2        py310hca03da5_0  
+cffi                      1.16.0          py310h80987f9_0  
+charset-normalizer        2.0.4              pyhd3eb1b0_0  
+comm                      0.1.2           py310hca03da5_0  
+cyrus-sasl                2.1.28               h9131b1a_1  
+debugpy                   1.6.7           py310h313beb8_0  
+decorator                 5.1.1              pyhd3eb1b0_0  
+defusedxml                0.7.1              pyhd3eb1b0_0  
+exceptiongroup            1.2.0           py310hca03da5_0  
+executing                 0.8.3              pyhd3eb1b0_0  
+gettext                   0.21.0               h13f89a0_1  
+glib                      2.78.4               h313beb8_0  
+glib-tools                2.78.4               h313beb8_0  
+gst-plugins-base          1.14.1               h313beb8_1  
+gstreamer                 1.14.1               h80987f9_1  
+icu                       73.1                 h313beb8_0  
+idna                      3.4             py310hca03da5_0  
+ipykernel                 6.28.0          py310hca03da5_0  
+ipython                   8.20.0          py310hca03da5_0  
+ipywidgets                8.0.4           py310hca03da5_0  
+jedi                      0.18.1          py310hca03da5_1  
+jinja2                    3.1.3           py310hca03da5_0  
+jpeg                      9e                   h80987f9_1  
+json5                     0.9.6              pyhd3eb1b0_0  
+jsonschema                4.19.2          py310hca03da5_0  
+jsonschema-specifications 2023.7.1        py310hca03da5_0  
+jupyter                   1.0.0           py310hca03da5_9  
+jupyter-lsp               2.2.0           py310hca03da5_0  
+jupyter_client            8.6.0           py310hca03da5_0  
+jupyter_console           6.6.3           py310hca03da5_0  
+jupyter_core              5.5.0           py310hca03da5_0  
+jupyter_events            0.8.0           py310hca03da5_0  
+jupyter_server            2.10.0          py310hca03da5_0  
+jupyter_server_terminals  0.4.4           py310hca03da5_1  
+jupyterlab                4.0.11          py310hca03da5_0  
+jupyterlab_pygments       0.1.2                      py_0  
+jupyterlab_server         2.25.1          py310hca03da5_0  
+jupyterlab_widgets        3.0.9           py310hca03da5_0  
+krb5                      1.20.1               hf3e1bf2_1  
+libclang                  14.0.6          default_h1b80db6_1  
+libclang13                14.0.6          default_h24352ff_1  
+libcxx                    14.0.6               h848a8c0_0  
+libedit                   3.1.20230828         h80987f9_0  
+libffi                    3.4.4                hca03da5_0  
+libglib                   2.78.4               h0a96307_0  
+libiconv                  1.16                 h1a28f6b_2  
+libllvm14                 14.0.6               h7ec7a93_3  
+libpng                    1.6.39               h80987f9_0  
+libpq                     12.17                h02f6b3c_0  
+libsodium                 1.0.18               h1a28f6b_0  
+libxml2                   2.10.4               h0dcf63f_1  
+llvm-openmp               14.0.6               hc6e5704_0  
+lz4-c                     1.9.4                h313beb8_0  
+markupsafe                2.1.3           py310h80987f9_0  
+matplotlib-inline         0.1.6           py310hca03da5_0  
+mistune                   2.0.4           py310hca03da5_0  
+mysql                     5.7.24               ha71a6ea_2  
+nbclient                  0.8.0           py310hca03da5_0  
+nbconvert                 7.10.0          py310hca03da5_0  
+nbformat                  5.9.2           py310hca03da5_0  
+ncurses                   6.4                  h313beb8_0  
+nest-asyncio              1.6.0           py310hca03da5_0  
+notebook                  7.0.8           py310hca03da5_0  
+notebook-shim             0.2.3           py310hca03da5_0  
+openssl                   3.0.13               h1a28f6b_0  
+overrides                 7.4.0           py310hca03da5_0  
+packaging                 23.1            py310hca03da5_0  
+pandocfilters             1.5.0              pyhd3eb1b0_0  
+parso                     0.8.3              pyhd3eb1b0_0  
+pcre2                     10.42                hb066dcc_0  
+pexpect                   4.8.0              pyhd3eb1b0_3  
+pip                       23.3.1          py310hca03da5_0  
+platformdirs              3.10.0          py310hca03da5_0  
+ply                       3.11            py310hca03da5_0  
+prometheus_client         0.14.1          py310hca03da5_0  
+prompt-toolkit            3.0.43          py310hca03da5_0  
+prompt_toolkit            3.0.43               hd3eb1b0_0  
+psutil                    5.9.0           py310h1a28f6b_0  
+ptyprocess                0.7.0              pyhd3eb1b0_2  
+pure_eval                 0.2.2              pyhd3eb1b0_0  
+pycparser                 2.21               pyhd3eb1b0_0  
+pygments                  2.15.1          py310hca03da5_1  
+pyqt                      5.15.10         py310h313beb8_0  
+pyqt5-sip                 12.13.0         py310h80987f9_0  
+pysocks                   1.7.1           py310hca03da5_0  
+python                    3.10.13              hb885b13_0  
+python-dateutil           2.8.2              pyhd3eb1b0_0  
+python-fastjsonschema     2.16.2          py310hca03da5_0  
+python-json-logger        2.0.7           py310hca03da5_0  
+pytz                      2023.3.post1    py310hca03da5_0  
+pyyaml                    6.0.1           py310h80987f9_0  
+pyzmq                     25.1.2          py310h313beb8_0  
+qt-main                   5.15.2              h0917680_10  
+qtconsole                 5.5.0           py310hca03da5_0  
+qtpy                      2.4.1           py310hca03da5_0  
+readline                  8.2                  h1a28f6b_0  
+referencing               0.30.2          py310hca03da5_0  
+requests                  2.31.0          py310hca03da5_1  
+rfc3339-validator         0.1.4           py310hca03da5_0  
+rfc3986-validator         0.1.1           py310hca03da5_0  
+rpds-py                   0.10.6          py310hf0e4da2_0  
+send2trash                1.8.2           py310hca03da5_0  
+setuptools                68.2.2          py310hca03da5_0  
+sip                       6.7.12          py310h313beb8_0  
+six                       1.16.0             pyhd3eb1b0_1  
+sniffio                   1.3.0           py310hca03da5_0  
+soupsieve                 2.5             py310hca03da5_0  
+sqlite                    3.41.2               h80987f9_0  
+stack_data                0.2.0              pyhd3eb1b0_0  
+terminado                 0.17.1          py310hca03da5_0  
+tinycss2                  1.2.1           py310hca03da5_0  
+tk                        8.6.12               hb8d0fd4_0  
+tomli                     2.0.1           py310hca03da5_0  
+tornado                   6.3.3           py310h80987f9_0  
+traitlets                 5.7.1           py310hca03da5_0  
+typing-extensions         4.9.0           py310hca03da5_1  
+typing_extensions         4.9.0           py310hca03da5_1  
+tzdata                    2023d                h04d1e81_0  
+urllib3                   2.1.0           py310hca03da5_1  
+wcwidth                   0.2.5              pyhd3eb1b0_0  
+webencodings              0.5.1           py310hca03da5_1  
+websocket-client          0.58.0          py310hca03da5_4  
+wheel                     0.41.2          py310hca03da5_0  
+widgetsnbextension        4.0.5           py310hca03da5_0  
+xz                        5.4.5                h80987f9_0  
+yaml                      0.2.5                h1a28f6b_0  
+zeromq                    4.3.5                h313beb8_0  
+zlib                      1.2.13               h5a0b063_0  
+zstd                      1.5.5                hd90d995_0  
+
+
+<b>(dev1) %</b>
+</pre></div></div></div>
+
+
+<h2>14. install openai package
+<button class="collapsible">% install openai </button>
+<div class="content"><div id="container"><div id="content">
+<pre>
+<b>(dev1) % conda install openai </b>
+Channels:
+ - defaults
+Platform: osx-arm64
+Collecting package metadata (repodata.json): done
+Solving environment: done
+
+## Package Plan ##
+
+  environment location: /Users/jeremybloom/anaconda3/envs/dev1
+
+  added / updated specs:
+    - openai
+
+
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    bottleneck-1.3.7           |  py310hbda83bc_0         111 KB
+    distro-1.8.0               |  py310hca03da5_0          33 KB
+    h11-0.14.0                 |  py310hca03da5_0          92 KB
+    httpcore-1.0.2             |  py310hca03da5_0          87 KB
+    httpx-0.26.0               |  py310hca03da5_0         132 KB
+    numexpr-2.8.7              |  py310hecc3335_0         126 KB
+    numpy-1.26.3               |  py310h3b2db8e_0          11 KB
+    numpy-base-1.26.3          |  py310ha9811e2_0         5.8 MB
+    openai-1.9.0               |  py310hca03da5_0         253 KB
+    pandas-2.1.4               |  py310h46d7db6_0        11.8 MB
+    pandas-stubs-2.1.4.231227  |  py310hca03da5_0          99 KB
+    pydantic-1.10.12           |  py310h80987f9_1         2.0 MB
+    tqdm-4.65.0                |  py310h33ce5c2_0         133 KB
+    types-pytz-2022.4.0.0      |  py310hca03da5_1          17 KB
+    ------------------------------------------------------------
+                                           Total:        20.7 MB
+
+The following NEW packages will be INSTALLED:
+
+  blas               pkgs/main/osx-arm64::blas-1.0-openblas 
+  bottleneck         pkgs/main/osx-arm64::bottleneck-1.3.7-py310hbda83bc_0 
+  distro             pkgs/main/osx-arm64::distro-1.8.0-py310hca03da5_0 
+  h11                pkgs/main/osx-arm64::h11-0.14.0-py310hca03da5_0 
+  httpcore           pkgs/main/osx-arm64::httpcore-1.0.2-py310hca03da5_0 
+  httpx              pkgs/main/osx-arm64::httpx-0.26.0-py310hca03da5_0 
+  libgfortran        pkgs/main/osx-arm64::libgfortran-5.0.0-11_3_0_hca03da5_28 
+  libgfortran5       pkgs/main/osx-arm64::libgfortran5-11.3.0-h009349e_28 
+  libopenblas        pkgs/main/osx-arm64::libopenblas-0.3.21-h269037a_0 
+  numexpr            pkgs/main/osx-arm64::numexpr-2.8.7-py310hecc3335_0 
+  numpy              pkgs/main/osx-arm64::numpy-1.26.3-py310h3b2db8e_0 
+  numpy-base         pkgs/main/osx-arm64::numpy-base-1.26.3-py310ha9811e2_0 
+  openai             pkgs/main/osx-arm64::openai-1.9.0-py310hca03da5_0 
+  pandas             pkgs/main/osx-arm64::pandas-2.1.4-py310h46d7db6_0 
+  pandas-stubs       pkgs/main/osx-arm64::pandas-stubs-2.1.4.231227-py310hca03da5_0 
+  pydantic           pkgs/main/osx-arm64::pydantic-1.10.12-py310h80987f9_1 
+  python-tzdata      pkgs/main/noarch::python-tzdata-2023.3-pyhd3eb1b0_0 
+  tqdm               pkgs/main/osx-arm64::tqdm-4.65.0-py310h33ce5c2_0 
+  types-pytz         pkgs/main/osx-arm64::types-pytz-2022.4.0.0-py310hca03da5_1 
+
+
+Proceed ([y]/n)? 
+
+
+Downloading and Extracting Packages:
+                                                                                                                                                                        
+Preparing transaction: done                                                                                                                                             
+Verifying transaction: done                                                                                                                                             
+Executing transaction: done                                                                                                                                             
+<b>(dev1) % </b>
+</pre></div></div></div>
+
+
+<h2>15. check python version of current env
+<button class="collapsible">% python -V</button>
+<div class="content">
+<div id="container">
+<div id="content">
+<pre>
+<b>(dev1) % python -V</b>
+Python 3.10.13
+<b>(dev1) %</b>
+</pre></div></div></div>
+
+
+<h2>16. change env and check version
+<button class="collapsible">% conda activate base; python -V</button>
+<div class="content">
+<div id="container">
+<div id="content">
+<pre>
+<b>(dev1) % conda activate base; python -V</b>
+Python 3.11.5
+<b>(base) %</b>
+</pre></div></div></div>
+
+
+<h2>17. start juypyter notebook
+<button class="collapsible">% jupyter notebook</button>
+<div class="content">
+<div id="container">
+<div id="content">
+<pre>
+<b>(dev1) % jupyter notebook</b>
+...
+</pre></div></div></div>
+
+
+
+
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    } 
+  });
+}
+</script>
+
+</body>
+</html>
